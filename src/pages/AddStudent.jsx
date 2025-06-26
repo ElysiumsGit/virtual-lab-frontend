@@ -38,7 +38,7 @@ const AddStudent = () => {
         <div className='p-4'>
           <h1 className='text-lg font-semibold'>Basic Info</h1>
         </div>
-        <hr className='border border-gray-300 '/>
+        <hr className="bg-gray-300 h-px border-0" />
 
         <form onSubmit={handleSubmit} className='p-4'>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
@@ -63,6 +63,7 @@ const AddStudent = () => {
               label="Email"
               name="email"
               value={formData.email}
+              type='email'
               onChange={handleChange}
               placeholder="Enter First Name"
             />
@@ -79,6 +80,7 @@ const AddStudent = () => {
               label="Password"
               name="password"
               value={formData.password}
+              type='password'
               onChange={handleChange}
               placeholder="Enter First Name"
             />
@@ -87,6 +89,7 @@ const AddStudent = () => {
               label="Confirm Password"
               name="confirmPassword"
               value={formData.confirmPassword}
+              type='password'
               onChange={handleChange}
               placeholder="Enter First Name"
             />

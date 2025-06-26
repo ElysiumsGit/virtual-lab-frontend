@@ -1,8 +1,11 @@
 import React from 'react'
+import DashboardHeader from '../components/Header/DashboardHeader'
 
 const AdminList = () => {
   return (
-    <div>AdminList</div>
+    <>
+      <DashboardHeader title='Admin List'/>
+    </>
   )
 }
 

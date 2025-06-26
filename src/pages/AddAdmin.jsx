@@ -1,8 +1,11 @@
 import React from 'react'
+import DashboardHeader from '../components/Header/DashboardHeader'
 
 const AddAdmin = () => {
   return (
-    <div>AddAdmin</div>
+    <>
+      <DashboardHeader title='Add Admin'/>
+    </>
   )
 }
 
