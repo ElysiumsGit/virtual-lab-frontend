@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import {
   FaHome,
+  FaUserPlus,
   FaUserGraduate,
-  FaUsers,
-  FaBook,
-  FaBuilding,
-  FaUserTie,
-  FaGift,
-  FaDollarSign,
-  FaChartBar,
-  FaThLarge,
+  FaUserShield,
+  FaListUl,
 } from "react-icons/fa";
-import { MdEventNote } from "react-icons/md";
 import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
@@ -53,10 +47,10 @@ const LeftNavigation = () => {
   return (
     <aside className="w-64 h-screen bg-white shadow-md overflow-y-auto">
       {isMobile && (
-        <div className="py-4 px-4"> 
+        <div className="py-4 px-4">
           <h1 className="text-xl font-bold text-indigo-500 flex items-center">
             <span className="mr-1 text-2xl">🎓</span> VIRTUAL LAB
-          </h1> 
+          </h1>
         </div>
       )}
 
@@ -64,18 +58,11 @@ const LeftNavigation = () => {
         Main Menu
       </div>
 
-      <MenuItem to="/" icon={<FaHome />} title="Dashboard" />
-      <MenuItem to="/addStudent" icon={<FaUsers />} title="Add Student" />
-      <MenuItem to="/studentList" icon={<FaUsers />} title="Student List" />
-
-      <div className="border-gray-200/40 border-t-2 my-4" />
-
-      <div className="p-4 text-gray-400 text-xs uppercase tracking-wide">
-        Apps
-      </div>
-
-      <MenuItem to="/apps" icon={<FaUsers />} title="Apps" />
-      <MenuItem to="/charts" icon={<FaChartBar />} title="Charts" />
+      <MenuItem to="/dashboard" icon={<FaHome />} title="Dashboard" />
+      <MenuItem to="/dashboard/addStudent" icon={<FaUserPlus />} title="Add Student" />
+      <MenuItem to="/dashboard/studentList" icon={<FaUserGraduate />} title="Student List" />
+      <MenuItem to="/dashboard/addAdmin" icon={<FaUserPlus />} title="Add Admin" />
+      <MenuItem to="/dashboard/adminList" icon={<FaUserShield />} title="Admin List" />
     </aside>
   );
 };

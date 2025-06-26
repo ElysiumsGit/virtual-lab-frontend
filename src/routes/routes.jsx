@@ -4,33 +4,50 @@ import App from "../App";
 import AddStudent from "../pages/AddStudent";
 import StudentList from "../pages/StudentList";
 import ViewProfile from "../pages/ViewProfile";
+import AdminList from "../pages/AdminList";
+import AddAdmin from "../pages/AddAdmin";
+import Login from "../pages/Login";
+import NotFound from "../components/NotFound/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
-    children: (
-        [
-            {
-                path: "/",
-                element: <Dashboard/>
-            },
-            {
-                path: "/addStudent",
-                element: <AddStudent/>
-            },
-            {
-                path: "/studentList",
-                element: <StudentList/>
-            },
-            {
-                path: "/viewProfile/:id",
-                element: <ViewProfile/>
-            }
-        ]
-    )
+    element: <Login />
   },
-  
+  {
+    path: "/dashboard",
+    element: <App />,
+    children: [
+      {
+        path: "",
+        element: <Dashboard />
+      },
+      {
+        path: "addStudent",
+        element: <AddStudent />
+      },
+      {
+        path: "studentList",
+        element: <StudentList />
+      },
+      {
+        path: "viewProfile/:id",
+        element: <ViewProfile />
+      },
+      {
+        path: "addAdmin",
+        element: <AddAdmin />
+      },
+      {
+        path: "adminList",
+        element: <AdminList />
+      }
+    ]
+  },
+  {
+    path: "*", 
+    element: <NotFound />
+  }
 ]);
 
 export default router;
