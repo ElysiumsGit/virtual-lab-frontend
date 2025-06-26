@@ -4,28 +4,6 @@ import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { users } from "../../constant/constant";
 
-// const users = Array.from({ length: 50 }, (_, i) => {
-//   const id = i + 1;
-//   const firstNames = ["Neil", "John Carlo", "Cris Carlo", "Mika", "Anna", "James", "Ella", "Luke", "Sophia", "Liam"];
-//   const lastNames = ["Sims", "Abanes", "Garcia", "Dela Cruz", "Smith", "Johnson", "Tan", "Reyes", "Lee", "Martinez"];
-//   const statuses = ["pending", "approved", "rejected"];
-
-//   const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-//   const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-//   const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}${id}@school.com`;
-//   const status = statuses[Math.floor(Math.random() * statuses.length)];
-
-//   return {
-//     id,
-//     firstName,
-//     lastName,
-//     email,
-//     gradeLevel: "Senior Highschool",
-//     gender: Math.random() > 0.5 ? "Male" : "Female",
-//     status,
-//   };
-// });
-
 export default function PendingTable() {
   const [search, setSearch] = useState("");
   const [visibleCount, setVisibleCount] = useState(10);
@@ -33,12 +11,12 @@ export default function PendingTable() {
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
   const filteredUsers = users
-    .filter((user) => user.status === 'pending')
+    .filter((user) => user.status === "pending")
     .filter((user) =>
-    `${user.firstName} ${user.lastName} ${user.email} ${user.gradeLevel}`
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
+      `${user.firstName} ${user.lastName} ${user.email} ${user.gradeLevel}`
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    );
 
   const visibleUsers = filteredUsers.slice(0, visibleCount);
 
@@ -73,19 +51,25 @@ export default function PendingTable() {
         <>
           <div className="flex flex-col gap-6">
             <section>
-              <SearchField onchange={(e) => {
-                setSearch(e.target.value);
-                setVisibleCount(10); 
-              }} />
+              <SearchField
+                onchange={(e) => {
+                  setSearch(e.target.value);
+                  setVisibleCount(10);
+                }}
+              />
             </section>
           </div>
 
           <div className="flex flex-col gap-4">
             {visibleUsers.map((user) => (
-              <div key={user.id} className="p-4 bg-white shadow-md rounded-md border border-gray-200">
+              <div
+                key={user.id}
+                className="p-4 bg-white shadow-md rounded-md border border-gray-200"
+              >
                 <div className="flex items-center gap-4">
                   <div className="rounded-full w-12 h-12 bg-gray-600 flex items-center justify-center text-white text-lg font-bold">
-                    {user.firstName[0]}{user.lastName[0]}
+                    {user.firstName[0]}
+                    {user.lastName[0]}
                   </div>
                   <div>
                     <div className="text-base font-semibold">
@@ -102,7 +86,7 @@ export default function PendingTable() {
                   <button className="text-white background-primary-color py-2 px-4 rounded-sm hover:opacity-90">
                     Edit User
                   </button>
-                  <Link to={`/dashboard/viewProfile/${user.id}`} >
+                  <Link to={`/dashboard/viewProfile/${user.id}`}>
                     <button className="text-primary-color border py-2 px-4 rounded-sm hover:opacity-90">
                       View Profile
                     </button>
@@ -117,10 +101,12 @@ export default function PendingTable() {
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg bg-white">
           <div className="flex items-center justify-between flex-col md:flex-row flex-wrap gap-4 pb-4 pr-4 pt-4 bg-white">
             <section>
-              <SearchField onchange={(e) => {
-                setSearch(e.target.value);
-                setVisibleCount(10); // Reset on search
-              }} />
+              <SearchField
+                onchange={(e) => {
+                  setSearch(e.target.value);
+                  setVisibleCount(10); // Reset on search
+                }}
+              />
             </section>
           </div>
 
@@ -136,31 +122,45 @@ export default function PendingTable() {
             </thead>
             <tbody>
               {visibleUsers.map((user) => (
-                <tr key={user.id} className="bg-white border-b border-gray-300 hover:bg-gray-50">
-                  <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
+                <tr
+                  key={user.id}
+                  className="bg-white border-b border-gray-300 hover:bg-gray-50"
+                >
+                  <th
+                    scope="row"
+                    className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap"
+                  >
                     <div className="rounded-full w-10 h-10 bg-gray-600 flex items-center justify-center text-white text-sm font-medium">
-                      {user.firstName[0]}{user.lastName[0]}
+                      {user.firstName[0]}
+                      {user.lastName[0]}
                     </div>
                     <div className="ps-3">
                       <div className="text-base font-semibold">
                         {user.firstName} {user.lastName}
                       </div>
-                      <div className="font-normal text-gray-500">{user.email}</div>
+                      <div className="font-normal text-gray-500">
+                        {user.email}
+                      </div>
                     </div>
                   </th>
                   <td className="px-6 py-4">{user.gradeLevel}</td>
                   <td className="px-6 py-4">{user.gender}</td>
-                  {/* <td className="px-6 py-4">
-                    <div className="flex items-center">
-                      <div className={`h-2.5 w-2.5 rounded-full ${user.status === "online" ? "bg-green-500" : "bg-red-500"} me-2`}></div>
-                      {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
-                    </div>
-                  </td> */}
+
                   <td className="px-6 py-4">
-                    <a href="#" className="font-medium primary-color hover:underline">Edit user</a>
+                    <a
+                      href="#"
+                      className="font-medium primary-color hover:underline"
+                    >
+                      Edit user
+                    </a>
                   </td>
                   <td className="px-6 py-4">
-                    <Link to={`/dashboard/viewProfile/${user.id}`} className="font-medium primary-color hover:underline">View Profile</Link>
+                    <Link
+                      to={`/dashboard/viewProfile/${user.id}`}
+                      className="font-medium primary-color hover:underline"
+                    >
+                      View Profile
+                    </Link>
                   </td>
                 </tr>
               ))}

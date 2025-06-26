@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const CocThree = () => {
-  return (
-    <div>CocThree</div>
-  )
-}
+  return <div>CocThree</div>;
+};
 
-export default CocThree
+export default CocThree;

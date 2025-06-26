@@ -1,5 +1,5 @@
-import React from 'react';
-import { FiChevronDown } from 'react-icons/fi'; // You can use any icon here
+import React from "react";
+import { FiChevronDown } from "react-icons/fi"; // You can use any icon here
 
 const SelectField = ({ label, name, value, onChange, options }) => {
   return (
@@ -13,8 +13,10 @@ const SelectField = ({ label, name, value, onChange, options }) => {
           className="w-full appearance-none border rounded px-3 border-gray-300 py-2 pr-10"
         >
           <option value="">Select {label}</option>
-          {options.map(opt => (
-            <option key={opt} value={opt}>{opt}</option>
+          {options.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
           ))}
         </select>
         {/* Custom dropdown icon */}

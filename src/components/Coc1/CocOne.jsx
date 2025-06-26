@@ -7,7 +7,8 @@ const CocOne = () => {
   const exams = [
     {
       id: "exam1",
-      imageFood: "https://res.cloudinary.com/dhceioavi/image/upload/v1749359823/soup_mbvceo.png",
+      imageFood:
+        "https://res.cloudinary.com/dhceioavi/image/upload/v1749359823/soup_mbvceo.png",
       typeOfExam: "coc1",
       category: "main dish",
       ingredients: ["Chicken Breast", "Salt", "Pepper", "Olive Oil"],
@@ -29,7 +30,8 @@ const CocOne = () => {
     },
     {
       id: "exam1",
-      imageFood: "https://res.cloudinary.com/dhceioavi/image/upload/v1749359823/soup_mbvceo.png",
+      imageFood:
+        "https://res.cloudinary.com/dhceioavi/image/upload/v1749359823/soup_mbvceo.png",
       typeOfExam: "coc1",
       category: "main dish",
       ingredients: ["Chicken Breast", "Salt", "Pepper", "Olive Oil"],
@@ -73,33 +75,55 @@ const CocOne = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 gap-6">
-        {[...exams, ...Array(5 - exams.length).fill(null)].map((exam, index) => (
+        {[...exams, ...Array(5 - exams.length).fill(null)].map((exam, index) =>
           exam ? (
-            <div key={index} className="p-4 bg-white rounded-lg shadow space-y-4 flex flex-col">
-              <img src={exam.imageFood} alt="Food" className="w-full h-60 object-cover rounded-md" />
+            <div
+              key={index}
+              className="p-4 bg-white rounded-lg shadow space-y-4 flex flex-col"
+            >
+              <img
+                src={exam.imageFood}
+                alt="Food"
+                className="w-full h-60 object-cover rounded-md"
+              />
               <div className="text-sm">
-                <p><strong>Category:</strong> {exam.category}</p>
-                <p><strong>Is Well Cooked:</strong> {exam.isWellCooked ? "Yes" : "No"}</p>
-                <p><strong>Time:</strong> {new Date(exam.time.start).toLocaleTimeString()} - {new Date(exam.time.end).toLocaleTimeString()}</p>
+                <p>
+                  <strong>Category:</strong> {exam.category}
+                </p>
+                <p>
+                  <strong>Is Well Cooked:</strong>{" "}
+                  {exam.isWellCooked ? "Yes" : "No"}
+                </p>
+                <p>
+                  <strong>Time:</strong>{" "}
+                  {new Date(exam.time.start).toLocaleTimeString()} -{" "}
+                  {new Date(exam.time.end).toLocaleTimeString()}
+                </p>
               </div>
               <div>
                 <h4 className="font-semibold text-indigo-600">Ingredients</h4>
                 <ul className="list-disc pl-4 text-xs text-gray-700">
-                  {exam.ingredients.map((item, i) => <li key={i}>{item}</li>)}
+                  {exam.ingredients.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-indigo-600">Tools</h4>
                 <ul className="text-xs text-gray-700">
                   {exam.tools.map((tool, i) => (
-                    <li key={i}><strong>{tool.name}:</strong> {tool.usage}</li>
+                    <li key={i}>
+                      <strong>{tool.name}:</strong> {tool.usage}
+                    </li>
                   ))}
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-indigo-600">Procedure</h4>
                 <ol className="list-decimal pl-4 text-xs text-gray-700">
-                  {exam.procedure.map((step, i) => <li key={i}>{step}</li>)}
+                  {exam.procedure.map((step, i) => (
+                    <li key={i}>{step}</li>
+                  ))}
                 </ol>
               </div>
               <button
@@ -120,10 +144,10 @@ const CocOne = () => {
               Not taking yet
             </div>
           )
-        ))}
+        )}
       </div>
 
-            {/* Modal */}
+      {/* Modal */}
       {openModalIndex !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 relative">
@@ -151,9 +175,12 @@ const CocOne = () => {
             >
               {/* Dimensions Section */}
               <div>
-                <h3 className="text-lg font-medium text-gray-800">Technical Dimensions (0–4)</h3>
+                <h3 className="text-lg font-medium text-gray-800">
+                  Technical Dimensions (0–4)
+                </h3>
                 <p className="text-sm text-gray-500 mb-2">
-                  Evaluate the student's performance based on the following technical criteria.
+                  Evaluate the student's performance based on the following
+                  technical criteria.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
@@ -164,7 +191,9 @@ const CocOne = () => {
                     { field: "timeManagement", label: "Time Management" },
                   ].map(({ field, label }) => (
                     <div key={field}>
-                      <label className="block text-sm font-medium text-gray-700">{label}</label>
+                      <label className="block text-sm font-medium text-gray-700">
+                        {label}
+                      </label>
                       <input
                         type="number"
                         name={field}
@@ -181,9 +210,12 @@ const CocOne = () => {
 
               {/* Criteria Section */}
               <div>
-                <h3 className="text-lg font-medium text-gray-800">Presentation Criteria (0–5)</h3>
+                <h3 className="text-lg font-medium text-gray-800">
+                  Presentation Criteria (0–5)
+                </h3>
                 <p className="text-sm text-gray-500 mb-2">
-                  Score the student's output based on presentation and aesthetics.
+                  Score the student's output based on presentation and
+                  aesthetics.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
@@ -191,10 +223,15 @@ const CocOne = () => {
                     { field: "useOfColor", label: "Use of Color" },
                     { field: "shape", label: "Shape & Form" },
                     { field: "useOfGarnish", label: "Use of Garnish" },
-                    { field: "overallPresentation", label: "Overall Presentation" },
+                    {
+                      field: "overallPresentation",
+                      label: "Overall Presentation",
+                    },
                   ].map(({ field, label }) => (
                     <div key={field}>
-                      <label className="block text-sm font-medium text-gray-700">{label}</label>
+                      <label className="block text-sm font-medium text-gray-700">
+                        {label}
+                      </label>
                       <input
                         type="number"
                         name={field}
@@ -211,7 +248,9 @@ const CocOne = () => {
 
               {/* Comment Section */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">Comment / Feedback</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Comment / Feedback
+                </label>
                 <textarea
                   name="comment"
                   value={formData.comment || ""}

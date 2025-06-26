@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import DashboardHeader from '../components/Header/DashboardHeader';
-import CocOne from '../components/Coc1/CocOne';
-import CocTwo from '../components/Coc2/CocTwo';
-import CocThree from '../components/Coc3/CocThree';
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import DashboardHeader from "../components/Header/DashboardHeader";
+import CocOne from "../components/Coc1/CocOne";
+import CocTwo from "../components/Coc2/CocTwo";
+import CocThree from "../components/Coc3/CocThree";
 
 const ViewProfile = () => {
   const users = [
@@ -40,7 +40,10 @@ const ViewProfile = () => {
   const user = users.find((u) => u.id === parseInt(id));
   const [activeTab, setActiveTab] = useState("COC 1");
 
-  if (!user) return <div className="text-center text-red-500 mt-10">User not found.</div>;
+  if (!user)
+    return (
+      <div className="text-center text-red-500 mt-10">User not found.</div>
+    );
 
   return (
     <div className="bg-gray-100">
@@ -55,17 +58,23 @@ const ViewProfile = () => {
               {user.firstName.charAt(0).toUpperCase()}
               {user.lastName.charAt(0).toUpperCase()}
             </div>
-            <h2 className="text-xl font-semibold mt-4">{user.firstName} {user.lastName}</h2>
+            <h2 className="text-xl font-semibold mt-4">
+              {user.firstName} {user.lastName}
+            </h2>
             <p className="text-sm text-gray-500">Senior High School</p>
           </div>
 
           {/* Info Card */}
           <div className="bg-white rounded-xl shadow p-6">
-            <h3 className="text-lg font-semibold text-indigo-600 mb-4">About the Student</h3>
+            <h3 className="text-lg font-semibold text-indigo-600 mb-4">
+              About the Student
+            </h3>
             <ul className="space-y-3 text-sm text-gray-700">
               <li className="flex justify-between">
                 <span className="font-medium">Full Name:</span>
-                <span>{user.firstName} {user.lastName}</span>
+                <span>
+                  {user.firstName} {user.lastName}
+                </span>
               </li>
               <li className="flex justify-between">
                 <span className="font-medium">Email:</span>
@@ -81,9 +90,13 @@ const ViewProfile = () => {
               </li>
               <li className="flex justify-between">
                 <span className="font-medium">Status:</span>
-                <span className={`capitalize font-semibold ${
-                  user.status === 'pending' ? 'text-yellow-600' : 'text-green-600'
-                }`}>
+                <span
+                  className={`capitalize font-semibold ${
+                    user.status === "pending"
+                      ? "text-yellow-600"
+                      : "text-green-600"
+                  }`}
+                >
                   {user.status}
                 </span>
               </li>
@@ -96,7 +109,7 @@ const ViewProfile = () => {
           <div className="bg-white rounded-xl shadow">
             {/* Tabs */}
             <div className="flex border-b border-gray-200 px-6">
-              {["COC 1", "COC 2", "COC 3"].map(tab => (
+              {["COC 1", "COC 2", "COC 3"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -115,17 +128,15 @@ const ViewProfile = () => {
             <div className="p-6">
               {activeTab === "COC 1" && (
                 <>
-                  <CocOne/>
+                  <CocOne />
                 </>
               )}
               {activeTab === "COC 2" && (
                 <>
-                  <CocTwo/>
+                  <CocTwo />
                 </>
               )}
-              {activeTab === "COC 3" && (
-                <CocThree/>
-              )}
+              {activeTab === "COC 3" && <CocThree />}
             </div>
           </div>
         </div>

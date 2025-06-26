@@ -1,6 +1,13 @@
-import React from 'react';
+import React from "react";
 
-const InputField = ({ label, type = "text", name, value, onChange, placeholder }) => {
+const InputField = ({
+  label,
+  type = "text",
+  name,
+  value,
+  onChange,
+  placeholder,
+}) => {
   return (
     <div>
       <label className="block mb-1 font-medium">{label}</label>

@@ -29,13 +29,15 @@ const Header = ({ onMenuClick }) => {
   }, []);
 
   const handleLogout = () => {
-    navigate('/');
+    navigate("/");
   };
 
   return (
     <header className="flex items-center justify-between px-6 py-3 bg-white relative">
       <div className="flex items-center gap-4">
-        {isMobile && <FiMenu onClick={onMenuClick} className="text-2xl cursor-pointer" />}
+        {isMobile && (
+          <FiMenu onClick={onMenuClick} className="text-2xl cursor-pointer" />
+        )}
         {!isMobile && (
           <h1 className="text-xl font-bold text-indigo-500 flex items-center">
             <span className="mr-1 text-2xl">🎓</span> VIRTUAL LAB SIMULATOR
@@ -56,8 +58,12 @@ const Header = ({ onMenuClick }) => {
         {isDropdownOpen && (
           <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md z-10">
             <ul className="flex flex-col">
-              <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Profile</li>
-              <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
+              <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                Profile
+              </li>
+              <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                Settings
+              </li>
               <li
                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500"
                 onClick={handleLogout}

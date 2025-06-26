@@ -1,12 +1,12 @@
-import React from 'react'
-import DashboardHeader from '../components/Header/DashboardHeader'
+import React from "react";
+import DashboardHeader from "../components/Header/DashboardHeader";
 
 const AdminList = () => {
   return (
     <>
-      <DashboardHeader title='Admin List'/>
+      <DashboardHeader title="Admin List" />
     </>
-  )
-}
+  );
+};
 
-export default AdminList
+export default AdminList;
