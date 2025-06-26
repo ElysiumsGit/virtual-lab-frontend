@@ -31,7 +31,7 @@ const AddStudent = () => {
   return (
     <section className='flex flex-col gap-6'>
       <section>
-        <DashboardHeader title='Add Student' />
+        <DashboardHeader title='Add Students' />
       </section>
 
       <section className='bg-white rounded shadow'>
