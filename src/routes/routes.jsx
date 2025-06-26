@@ -8,6 +8,7 @@ import AdminList from "../pages/AdminList";
 import AddAdmin from "../pages/AddAdmin";
 import Login from "../pages/Login";
 import NotFound from "../components/NotFound/NotFound";
+import PendingStudent from "../pages/PendingStudent";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "addStudent",
         element: <AddStudent />
+      },
+      {
+        path: "pendingStudent",
+        element: <PendingStudent />
       },
       {
         path: "studentList",

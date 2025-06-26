@@ -60,6 +60,7 @@ const LeftNavigation = () => {
 
       <MenuItem to="/dashboard" icon={<FaHome />} title="Dashboard" />
       <MenuItem to="/dashboard/addStudent" icon={<FaUserPlus />} title="Add Student" />
+      <MenuItem to="/dashboard/pendingStudent" icon={<FaUserPlus />} title="Pending Student" />
       <MenuItem to="/dashboard/studentList" icon={<FaUserGraduate />} title="Student List" />
       <MenuItem to="/dashboard/addAdmin" icon={<FaUserPlus />} title="Add Admin" />
       <MenuItem to="/dashboard/adminList" icon={<FaUserShield />} title="Admin List" />

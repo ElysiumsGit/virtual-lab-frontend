@@ -33,7 +33,6 @@ const users = [
       email: "neil.sims@flowbite.com",
       gradeLevel: "Senior Highschool",
       gender: "Male",
-      status: "pending",
     },
     {
       id: 2,
@@ -42,7 +41,6 @@ const users = [
       email: "john.carlo@flowbite.com",
       gradeLevel: "Senior Highschool",
       gender: "Male",
-      status: "pending",
     },
     {
       id: 3,
@@ -51,7 +49,6 @@ const users = [
       email: "cris.carlo@flowbite.com",
       gradeLevel: "Senior Highschool",
       gender: "Male",
-      status: "pending",
     },
   ];
 
@@ -131,14 +128,20 @@ export default function UserTable() {
                 <div className="mt-2 text-sm">
                   <div>Grade Level: {user.gradeLevel}</div>
                   <div>Gender: {user.gender}</div>
-                  <div className="flex items-center">
+                  {/* <div className="flex items-center">
                     <span className={`h-2.5 w-2.5 rounded-full mr-2 mt-[2px] ${user.status === "online" ? "bg-green-500" : "bg-red-500"}`}></span>
                     Status: {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
-                  </div>
+                  </div> */}
                 </div>
-                <div className="mt-3 flex gap-4 text-sm">
-                  <a href="#" className="text-blue-600 hover:underline">Edit User</a>
-                  <Link to={`/dashboard/viewProfile/${user.id}`} className="text-blue-600 hover:underline">View Profile</Link>
+                <div className="mt-3 flex gap-4 text-sm justify-end">
+                  <button className="text-white background-primary-color py-2 px-4 rounded-sm hover:opacity-90">
+                    Edit User
+                  </button>
+                  <Link to={`/dashboard/viewProfile/${user.id}`} >
+                    <button className="text-primary-color border py-2 px-4 rounded-sm hover:opacity-90">
+                      View Profile
+                    </button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -169,7 +172,6 @@ export default function UserTable() {
                 <th className="px-6 py-3">Name</th>
                 <th className="px-6 py-3">Grade Level</th>
                 <th className="px-6 py-3">Gender</th>
-                <th className="px-6 py-3">Status</th>
                 <th className="px-6 py-3">Action</th>
                 <th className="px-6 py-3">View Action</th>
               </tr>
@@ -190,12 +192,12 @@ export default function UserTable() {
                   </th>
                   <td className="px-6 py-4">{user.gradeLevel}</td>
                   <td className="px-6 py-4">{user.gender}</td>
-                  <td className="px-6 py-4">
+                  {/* <td className="px-6 py-4">
                     <div className="flex items-center">
                       <div className={`h-2.5 w-2.5 rounded-full ${user.status === "online" ? "bg-green-500" : "bg-red-500"} me-2`}></div>
                       {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
                     </div>
-                  </td>
+                  </td> */}
                   <td className="px-6 py-4">
                     <a href="#" className="font-medium primary-color hover:underline">Edit user</a>
                   </td>
