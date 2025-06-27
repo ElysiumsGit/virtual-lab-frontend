@@ -44,6 +44,15 @@ export const users = [
     status: "approved",
     gender: "Male",
   },
+  {
+    id: 6,
+    firstName: "John Carlo",
+    lastName: "Abanes",
+    email: "john.carlo@flowbite.com",
+    gradeLevel: "Junior Highschool",
+    status: "approved",
+    gender: "Male",
+  },
 ];
 
 export const admins = [
