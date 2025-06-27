@@ -35,12 +35,12 @@ const AddStudent = () => {
       </section>
 
       <section className="bg-white rounded shadow">
-        <div className="p-4">
+        <div className="py-4 px-6">
           <h1 className="text-lg font-semibold">Basic Info</h1>
         </div>
         <hr className="bg-gray-300 h-px border-0" />
 
-        <form onSubmit={handleSubmit} className="p-4">
+        <form onSubmit={handleSubmit} className="py-4 px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <InputField
               label="First Name"

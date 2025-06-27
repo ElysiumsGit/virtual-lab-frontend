@@ -56,6 +56,7 @@ export default function UserTable() {
                   setSearch(e.target.value);
                   setVisibleCount(10);
                 }}
+                
               />
             </section>
             <section>
@@ -106,13 +107,14 @@ export default function UserTable() {
         </>
       ) : (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg bg-white">
-          <div className="flex items-center justify-between flex-col md:flex-row flex-wrap gap-4 pb-4 pr-4 pt-4 bg-white">
+          <div className="flex items-center justify-between flex-col md:flex-row flex-wrap gap-4 pb-4 px-6 pt-4 bg-white">
             <section>
               <SearchField
                 onchange={(e) => {
                   setSearch(e.target.value);
                   setVisibleCount(10); // Reset on search
                 }}
+                bgColor="bg-gray-100"
               />
             </section>
             <section>
