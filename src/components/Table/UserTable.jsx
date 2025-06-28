@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import SearchField from "../TextField/SearchField";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import { users } from "../../constant/constant";
+import crudStudentStore from "../../store/crudStudent";
 
 export default function UserTable() {
   const [search, setSearch] = useState("");
@@ -10,8 +10,14 @@ export default function UserTable() {
   const loadMoreRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
-  const filteredUsers = users
-    .filter((user) => user.status === "approved")
+  const { student, fetchStudentApproved, loading, error } = crudStudentStore();
+
+  useEffect(() => {
+    fetchStudentApproved();
+  }, []);
+
+  const filteredUsers = student
+    .filter((user) => user.status === "Approved")
     .filter((user) =>
       `${user.firstName} ${user.lastName} ${user.email} ${user.gradeLevel}`
         .toLowerCase()
@@ -45,6 +51,10 @@ export default function UserTable() {
     };
   }, [filteredUsers.length, visibleCount]);
 
+  if (loading) return <div className="text-center py-8">Loading...</div>;
+  if (error)
+    return <div className="text-center py-8 text-red-600">Error: {error}</div>;
+
   return (
     <>
       {isMobile ? (
@@ -70,7 +80,7 @@ export default function UserTable() {
           <div className="flex flex-col gap-4">
             {visibleUsers.map((user) => (
               <div
-                key={user.id}
+                key={user._id}
                 className="p-4 bg-white shadow-md rounded-md border border-gray-200"
               >
                 <div className="flex items-center gap-4">
@@ -80,7 +90,7 @@ export default function UserTable() {
                   </div>
                   <div>
                     <div className="text-base font-semibold">
-                      {user.firstName} {user.lastName}
+                      {user.firstName} {user._id}
                     </div>
                     <div className="text-sm text-gray-500">{user.email}</div>
                   </div>
@@ -93,7 +103,7 @@ export default function UserTable() {
                   <button className="text-white background-primary-color py-2 px-4 rounded-sm hover:opacity-90">
                     Edit User
                   </button>
-                  <Link to={`/dashboard/viewProfile/${user.id}`}>
+                  <Link to={`/dashboard/viewProfile/${user._id}`}>
                     <button className="text-primary-color border py-2 px-4 rounded-sm hover:opacity-90">
                       View Profile
                     </button>
@@ -111,7 +121,7 @@ export default function UserTable() {
               <SearchField
                 onchange={(e) => {
                   setSearch(e.target.value);
-                  setVisibleCount(10); // Reset on search
+                  setVisibleCount(10);
                 }}
               />
             </section>
@@ -137,7 +147,7 @@ export default function UserTable() {
             <tbody>
               {visibleUsers.map((user) => (
                 <tr
-                  key={user.id}
+                  key={user._id}
                   className="bg-white border-b border-gray-300 hover:bg-gray-50"
                 >
                   <th
@@ -169,7 +179,7 @@ export default function UserTable() {
                   </td>
                   <td className="px-6 py-4">
                     <Link
-                      to={`/dashboard/viewProfile/${user.id}`}
+                      to={`/dashboard/viewProfile/${user._id}`}
                       className="font-medium primary-color hover:underline"
                     >
                       View Profile
