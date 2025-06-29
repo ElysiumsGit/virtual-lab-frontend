@@ -3,10 +3,13 @@ import SearchField from "../TextField/SearchField";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import crudStudentStore from "../../store/crudStudent";
+import EditUserModal from "../Modal/EditModal";
 
 export default function UserTable() {
   const [search, setSearch] = useState("");
   const [visibleCount, setVisibleCount] = useState(10);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const loadMoreRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
@@ -101,7 +104,13 @@ export default function UserTable() {
                   <div>Gender: {user.gender}</div>
                 </div>
                 <div className="mt-3 flex gap-4 text-sm justify-end">
-                  <button className="text-white background-primary-color py-2 px-4 rounded-sm hover:opacity-90">
+                  <button
+                    className="text-white background-primary-color py-2 px-4 rounded-sm hover:opacity-90"
+                    onClick={() => {
+                      setSelectedUser(user);
+                      setIsEditModalOpen(true);
+                    }}
+                  >
                     Edit User
                   </button>
                   <Link to={`/dashboard/viewProfile/${user._id}`}>
@@ -113,6 +122,11 @@ export default function UserTable() {
               </div>
             ))}
             <div ref={loadMoreRef} className="h-8"></div>
+            <EditUserModal
+              isOpen={isEditModalOpen}
+              onClose={() => setIsEditModalOpen(false)}
+              user={selectedUser}
+            />
           </div>
         </>
       ) : (
@@ -175,6 +189,10 @@ export default function UserTable() {
                   <td className="px-6 py-4">{user.gender}</td>
                   <td className="px-6 py-4">
                     <a
+                      onClick={() => {
+                        setSelectedUser(user);
+                        setIsEditModalOpen(true);
+                      }}
                       href="#"
                       className="font-medium primary-color hover:underline"
                     >
@@ -193,7 +211,13 @@ export default function UserTable() {
               ))}
             </tbody>
           </table>
+
           <div ref={loadMoreRef} className="h-8"></div>
+          <EditUserModal
+            isOpen={isEditModalOpen}
+            onClose={() => setIsEditModalOpen(false)}
+            user={selectedUser}
+          />
         </div>
       )}
     </>

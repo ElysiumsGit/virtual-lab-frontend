@@ -7,6 +7,7 @@ const InputField = ({
   value,
   onChange,
   placeholder,
+  defaultValue,
 }) => {
   return (
     <div>
@@ -16,6 +17,7 @@ const InputField = ({
         name={name}
         value={value}
         onChange={onChange}
+        defaultValue={defaultValue}
         placeholder={placeholder}
         className="w-full border border-gray-300 rounded px-3 py-2"
       />
