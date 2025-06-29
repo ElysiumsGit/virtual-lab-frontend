@@ -20,6 +20,14 @@ export default function PendingTable() {
 
   const visibleUsers = filteredUsers.slice(0, visibleCount);
 
+  const handleApprove = (userId) => {
+    console.log("Approved user:", userId);
+  };
+
+  const handleDeny = (userId) => {
+    console.log("Denied user:", userId);
+  };
+
   useEffect(() => {
     if (filteredUsers.length <= visibleCount) return;
 
@@ -83,14 +91,18 @@ export default function PendingTable() {
                   <div>Gender: {user.gender}</div>
                 </div>
                 <div className="mt-3 flex gap-4 text-sm justify-end">
-                  <button className="text-white background-primary-color py-2 px-4 rounded-sm hover:opacity-90">
-                    Edit User
+                  <button
+                    className="text-green-600 hover:underline font-medium"
+                    onClick={() => handleApprove(user.id)}
+                  >
+                    Approve
                   </button>
-                  <Link to={`/dashboard/viewProfile/${user.id}`}>
-                    <button className="text-primary-color border py-2 px-4 rounded-sm hover:opacity-90">
-                      View Profile
-                    </button>
-                  </Link>
+                  <button
+                    className="text-red-600 hover:underline font-medium"
+                    onClick={() => handleDeny(user.id)}
+                  >
+                    Deny
+                  </button>
                 </div>
               </div>
             ))}
@@ -99,13 +111,14 @@ export default function PendingTable() {
         </>
       ) : (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg bg-white">
-          <div className="flex items-center justify-between flex-col md:flex-row flex-wrap gap-4 pb-4 pr-4 pt-4 bg-white">
+          <div className="flex items-center justify-between flex-col md:flex-row flex-wrap gap-4 pb-4 px-6 pt-4 bg-white">
             <section>
               <SearchField
                 onchange={(e) => {
                   setSearch(e.target.value);
-                  setVisibleCount(10); // Reset on search
+                  setVisibleCount(10);
                 }}
+                bgColor="bg-gray-100"
               />
             </section>
           </div>
@@ -117,7 +130,6 @@ export default function PendingTable() {
                 <th className="px-6 py-3">Grade Level</th>
                 <th className="px-6 py-3">Gender</th>
                 <th className="px-6 py-3">Action</th>
-                <th className="px-6 py-3">View Action</th>
               </tr>
             </thead>
             <tbody>
@@ -147,20 +159,20 @@ export default function PendingTable() {
                   <td className="px-6 py-4">{user.gender}</td>
 
                   <td className="px-6 py-4">
-                    <a
-                      href="#"
-                      className="font-medium primary-color hover:underline"
-                    >
-                      Edit user
-                    </a>
-                  </td>
-                  <td className="px-6 py-4">
-                    <Link
-                      to={`/dashboard/viewProfile/${user.id}`}
-                      className="font-medium primary-color hover:underline"
-                    >
-                      View Profile
-                    </Link>
+                    <div className="flex gap-6">
+                      <button
+                        className="text-green-600 hover:underline font-medium"
+                        onClick={() => handleApprove(user.id)}
+                      >
+                        Approve
+                      </button>
+                      <button
+                        className="text-red-600 hover:underline font-medium"
+                        onClick={() => handleDeny(user.id)}
+                      >
+                        Deny
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

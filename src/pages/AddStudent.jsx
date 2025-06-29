@@ -2,17 +2,22 @@ import React, { useState } from "react";
 import DashboardHeader from "../components/Header/DashboardHeader";
 import InputField from "../components/TextField/InputField";
 import SelectField from "../components/TextField/SelectField";
+import crudStudentStore from "../store/crudStudent";
+import ErrorModal from "../components/Modal/ErrorModal";
 
 const AddStudent = () => {
+  const { createStudent } = crudStudentStore();
+  const [error, setError] = useState("");
+
   const [formData, setFormData] = useState({
+    lrn: "",
     firstName: "",
     lastName: "",
     email: "",
     gender: "",
     password: "",
-    confirmPassword: "",
-    education: "",
     gradeLevel: "",
+    status: "Approved",
   });
 
   const handleChange = (e) => {
@@ -23,9 +28,26 @@ const AddStudent = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    const response = await createStudent(formData);
+
+    if (!response.success) {
+      setError(response.message);
+      return;
+    }
+
+    setFormData({
+      lrn: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      gender: "",
+      password: "",
+      gradeLevel: "",
+      status: "Approved",
+    });
   };
 
   return (
@@ -35,13 +57,21 @@ const AddStudent = () => {
       </section>
 
       <section className="bg-white rounded shadow">
-        <div className="p-4">
+        <div className="py-4 px-6">
           <h1 className="text-lg font-semibold">Basic Info</h1>
         </div>
         <hr className="bg-gray-300 h-px border-0" />
 
-        <form onSubmit={handleSubmit} className="p-4">
+        <form onSubmit={handleSubmit} className="py-4 px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <InputField
+              label="LRN"
+              name="lrn"
+              value={formData.lrn}
+              onChange={handleChange}
+              placeholder="Enter LRN"
+            />
+
             <InputField
               label="First Name"
               name="firstName"
@@ -83,15 +113,6 @@ const AddStudent = () => {
               onChange={handleChange}
               placeholder="Enter First Name"
             />
-
-            <InputField
-              label="Confirm Password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              type="password"
-              onChange={handleChange}
-              placeholder="Enter First Name"
-            />
           </div>
 
           <div className="mt-4">
@@ -114,6 +135,7 @@ const AddStudent = () => {
           </div>
         </form>
       </section>
+      {error && <ErrorModal message={error} onClose={() => setError("")} />}
     </section>
   );
 };

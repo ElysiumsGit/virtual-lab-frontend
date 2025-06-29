@@ -2,32 +2,32 @@ import React from "react";
 import { FaSearch } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
 
-const SearchField = ({ onchange }) => {
+const SearchField = ({ onchange, bgColor = "bg-white" }) => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
+
+  const inputClasses = `w-full pl-10 pr-4 py-2 rounded-lg ${bgColor} focus:outline-none`;
 
   return (
     <>
-      {isMobile && (
+      {isMobile ? (
         <div>
           <div className="relative">
             <input
               type="text"
               placeholder="Search"
-              className="w-full pl-10 pr-4 py-2 rounded-lg bg-white focus:outline-none"
+              className={inputClasses}
               onChange={onchange}
             />
             <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
         </div>
-      )}
-
-      {!isMobile && (
-        <div className="flex-grow mx-4 w-[500px]">
+      ) : (
+        <div className="flex-grow w-[500px]">
           <div className="relative">
             <input
               type="text"
               placeholder="Search"
-              className="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 focus:outline-none"
+              className={inputClasses}
               onChange={onchange}
             />
             <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
