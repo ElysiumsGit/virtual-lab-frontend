@@ -3,9 +3,11 @@ import InputField from "../TextField/InputField";
 import SelectField from "../TextField/SelectField";
 import crudStudentStore from "../../store/crudStudent";
 import SuccessModal from "../Modal/SuccessModal";
+import ErrorModal from "../Modal/ErrorModal";
 
 export default function EditUserModal({ isOpen, onClose, user }) {
   const { updateStudent } = crudStudentStore();
+  const [success, setSuccess] = useState(false);
 
   const [formData, setFormData] = useState({
     _id: "",
@@ -14,6 +16,7 @@ export default function EditUserModal({ isOpen, onClose, user }) {
     lastName: "",
     gender: "",
     gradeLevel: "",
+    email: "",
   });
 
   useEffect(() => {
@@ -30,12 +33,7 @@ export default function EditUserModal({ isOpen, onClose, user }) {
   };
 
   const handleSubmit = async () => {
-    const result = await updateStudent(formData);
-    if (result.success) {
-      onClose();
-    } else {
-      alert(result.message);
-    }
+    await updateStudent(formData);
   };
 
   if (!isOpen || !user) return null;
@@ -88,7 +86,10 @@ export default function EditUserModal({ isOpen, onClose, user }) {
             Cancel
           </button>
           <button
-            onClick={handleSubmit}
+            onClick={() => {
+              handleSubmit();
+              onClose();
+            }}
             className="py-2 px-4 text-white background-primary-color rounded-sm hover:opacity-80"
           >
             Save
