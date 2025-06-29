@@ -7,6 +7,16 @@ const crudStudentStore = create((set) => ({
   loading: false,
   error: null,
 
+  fetchAllStudents: async () => {
+    set({ loading: true });
+    try {
+      const res = await axios.get("http://localhost:5000/student/read");
+      set({ student: res.data, loading: false });
+    } catch (error) {
+      set({ error: error.message, loading: false });
+    }
+  },
+
   fetchStudentApproved: async () => {
     set({ loading: true });
     try {
@@ -32,23 +42,53 @@ const crudStudentStore = create((set) => ({
   createStudent: async (newStudent) => {
     try {
       const res = await axios.post(
-        `http://localhost:5000/student/create`,
+        "http://localhost:5000/student/create",
         newStudent
       );
-
       set((state) => ({
-        students: [...state.students, res.data.student],
+        student: [...state.student, res.data.student],
         error: null,
       }));
-
-      return { success: true, message: res.data.message }; // ✅ MUST return this
+      return { success: true };
     } catch (error) {
-      const errorMessage =
-        error.response?.data?.message || "Something went wrong";
+      const message = error.response?.data?.message || "Something went wrong";
+      set({ error: message });
+      return { success: false, message };
+    }
+  },
 
-      set({ error: errorMessage });
+  updateStudent: async (updatedStudent) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/student/update/${updatedStudent._id}`,
+        updatedStudent
+      );
+      set((state) => ({
+        student: state.student.map((student) =>
+          student._id === updatedStudent._id ? res.data.student : student
+        ),
+        error: null,
+      }));
+      return { success: true };
+    } catch (error) {
+      const message = error.response?.data?.message || "Something went wrong";
+      set({ error: message });
+      return { success: false, message };
+    }
+  },
 
-      return { success: false, message: errorMessage }; // ✅ MUST return this too
+  deleteStudent: async (_id) => {
+    try {
+      await axios.delete(`http://localhost:5000/student/delete/${_id}`);
+      set((state) => ({
+        student: state.student.filter((student) => student._id !== _id),
+        error: null,
+      }));
+      return { success: true };
+    } catch (error) {
+      const message = error.response?.data?.message || "Something went wrong";
+      set({ error: message });
+      return { success: false, message };
     }
   },
 }));

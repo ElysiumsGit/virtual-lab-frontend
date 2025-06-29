@@ -19,7 +19,7 @@ export default function UserTable() {
   const filteredUsers = student
     .filter((user) => user.status === "Approved")
     .filter((user) =>
-      `${user.firstName} ${user.lastName} ${user.email} ${user.gradeLevel}`
+      `${user.firstName} ${user.lastName} ${user.email} ${user.gradeLevel} ${user.lrn}`
         .toLowerCase()
         .includes(search.toLowerCase())
     );
@@ -66,7 +66,6 @@ export default function UserTable() {
                   setSearch(e.target.value);
                   setVisibleCount(10);
                 }}
-                
               />
             </section>
             <section>
@@ -91,12 +90,13 @@ export default function UserTable() {
                   </div>
                   <div>
                     <div className="text-base font-semibold">
-                      {user.firstName} {user._id}
+                      {user.firstName} {user.lastName}
                     </div>
                     <div className="text-sm text-gray-500">{user.email}</div>
                   </div>
                 </div>
                 <div className="mt-2 text-sm">
+                  <div>LRN: {user.lrn}</div>
                   <div>Grade Level: {user.gradeLevel}</div>
                   <div>Gender: {user.gender}</div>
                 </div>
@@ -140,6 +140,7 @@ export default function UserTable() {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th className="px-6 py-3">Name</th>
+                <th className="px-6 py-3">LRN</th>
                 <th className="px-6 py-3">Grade Level</th>
                 <th className="px-6 py-3">Gender</th>
                 <th className="px-6 py-3">Action</th>
@@ -169,6 +170,7 @@ export default function UserTable() {
                       </div>
                     </div>
                   </th>
+                  <td className="px-6 py-4">{user.lrn}</td>
                   <td className="px-6 py-4">{user.gradeLevel}</td>
                   <td className="px-6 py-4">{user.gender}</td>
                   <td className="px-6 py-4">

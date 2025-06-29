@@ -4,10 +4,14 @@ import InputField from "../components/TextField/InputField";
 import SelectField from "../components/TextField/SelectField";
 import crudStudentStore from "../store/crudStudent";
 import ErrorModal from "../components/Modal/ErrorModal";
+import SuccessModal from "../components/Modal/SuccessModal";
 
 const AddStudent = () => {
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const { createStudent } = crudStudentStore();
-  const [error, setError] = useState("");
 
   const [formData, setFormData] = useState({
     lrn: "",
@@ -21,35 +25,38 @@ const AddStudent = () => {
   });
 
   const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "file" ? files[0] : value,
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    const result = await createStudent(formData);
+    setLoading(false);
 
-    const response = await createStudent(formData);
-
-    if (!response.success) {
-      setError(response.message);
+    if (!result.success) {
+      setError(true);
+      console.error("Error creating student:", result.message);
       return;
+    } else {
+      setSuccess(true);
+      // setFormData({
+      //   lrn: "",
+      //   firstName: "",
+      //   lastName: "",
+      //   email: "",
+      //   gender: "",
+      //   password: "",
+      //   gradeLevel: "",
+      //   status: "Approved",
+      // });
+      console.log("Student created successfully");
     }
-
-    setFormData({
-      lrn: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      gender: "",
-      password: "",
-      gradeLevel: "",
-      status: "Approved",
-    });
   };
-
   return (
     <section className="flex flex-col gap-6">
       <section>
@@ -128,14 +135,26 @@ const AddStudent = () => {
           <div className="flex justify-end gap-2 mt-6">
             <button
               type="submit"
-              className="background-primary-color text-white px-4 py-2 rounded-sm cursor-pointer hover:opacity-90"
+              className="background-primary-color text-white px-4 py-2 rounded-sm cursor-pointer hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={loading}
             >
-              Submit
+              {loading ? "Submitting..." : "Submit"}
             </button>
           </div>
         </form>
       </section>
-      {error && <ErrorModal message={error} onClose={() => setError("")} />}
+      {success && (
+        <SuccessModal
+          message="Student added successfully!"
+          onClose={() => setSuccess(false)}
+        />
+      )}
+      {error && (
+        <ErrorModal
+          message="LRN or email already exists."
+          onClose={() => setError(false)}
+        />
+      )}
     </section>
   );
 };
