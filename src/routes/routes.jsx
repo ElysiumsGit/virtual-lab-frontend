@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Dashboard from '../pages/Dashboard';
+import Dashboard from "../pages/Dashboard";
 import App from "../App";
 import AddStudent from "../pages/AddStudent";
 import StudentList from "../pages/StudentList";
@@ -13,7 +13,7 @@ import PendingStudent from "../pages/PendingStudent";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Login />
+    element: <Login />,
   },
   {
     path: "/dashboard",
@@ -21,38 +21,38 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Dashboard />
+        element: <Dashboard />,
       },
       {
         path: "addStudent",
-        element: <AddStudent />
+        element: <AddStudent />,
       },
       {
         path: "pendingStudent",
-        element: <PendingStudent />
+        element: <PendingStudent />,
       },
       {
         path: "studentList",
-        element: <StudentList />
+        element: <StudentList />,
       },
       {
-        path: "viewProfile/:id",
-        element: <ViewProfile />
+        path: "viewProfile/:_id",
+        element: <ViewProfile />,
       },
       {
         path: "addAdmin",
-        element: <AddAdmin />
+        element: <AddAdmin />,
       },
       {
         path: "adminList",
-        element: <AdminList />
-      }
-    ]
+        element: <AdminList />,
+      },
+    ],
   },
   {
-    path: "*", 
-    element: <NotFound />
-  }
+    path: "*",
+    element: <NotFound />,
+  },
 ]);
 
 export default router;

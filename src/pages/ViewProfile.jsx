@@ -1,49 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DashboardHeader from "../components/Header/DashboardHeader";
 import CocOne from "../components/Coc1/CocOne";
 import CocTwo from "../components/Coc2/CocTwo";
 import CocThree from "../components/Coc3/CocThree";
+import crudStudentStore from "../store/crudStudent";
 
 const ViewProfile = () => {
-  const users = [
-    {
-      id: 1,
-      firstName: "Neil",
-      lastName: "Sims",
-      email: "neil.sims@flowbite.com",
-      gradeLevel: "Senior Highschool",
-      gender: "Male",
-      status: "pending",
-    },
-    {
-      id: 2,
-      firstName: "John Carlo",
-      lastName: "Abanes",
-      email: "john.carlo@flowbite.com",
-      gradeLevel: "Senior Highschool",
-      gender: "Male",
-      status: "pending",
-    },
-    {
-      id: 3,
-      firstName: "Cris Carlo",
-      lastName: "Abanes",
-      email: "cris.carlo@flowbite.com",
-      gradeLevel: "Senior Highschool",
-      gender: "Male",
-      status: "pending",
-    },
-  ];
+  const { _id } = useParams();
+  const { fetchProfile, profile, loading, error } = crudStudentStore();
 
-  const { id } = useParams();
-  const user = users.find((u) => u.id === parseInt(id));
+  useEffect(() => {
+    if (_id) {
+      fetchProfile(_id);
+    }
+  }, [_id]);
+
   const [activeTab, setActiveTab] = useState("COC 1");
 
-  if (!user)
+  if (loading) {
+    return <div className="text-center mt-10 text-gray-500">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center mt-10 text-red-500">Error: {error}</div>;
+  }
+
+  if (!profile) {
     return (
       <div className="text-center text-red-500 mt-10">User not found.</div>
     );
+  }
 
   return (
     <div className="bg-gray-100">
@@ -55,11 +42,11 @@ const ViewProfile = () => {
           {/* Profile Card */}
           <div className="bg-white rounded-xl shadow p-6 text-center">
             <div className="w-28 h-28 mx-auto bg-indigo-500 text-white rounded-full flex items-center justify-center text-4xl font-bold shadow-inner">
-              {user.firstName.charAt(0).toUpperCase()}
-              {user.lastName.charAt(0).toUpperCase()}
+              {profile.firstName.charAt(0).toUpperCase()}
+              {profile.lastName.charAt(0).toUpperCase()}
             </div>
             <h2 className="text-xl font-semibold mt-4">
-              {user.firstName} {user.lastName}
+              {profile.firstName} {profile.lastName}
             </h2>
             <p className="text-sm text-gray-500">Senior High School</p>
           </div>
@@ -73,31 +60,31 @@ const ViewProfile = () => {
               <li className="flex justify-between">
                 <span className="font-medium">Full Name:</span>
                 <span>
-                  {user.firstName} {user.lastName}
+                  {profile.firstName} {profile.lastName}
                 </span>
               </li>
               <li className="flex justify-between">
                 <span className="font-medium">Email:</span>
-                <span>{user.email}</span>
+                <span>{profile.email}</span>
               </li>
               <li className="flex justify-between">
                 <span className="font-medium">Gender:</span>
-                <span>{user.gender}</span>
+                <span>{profile.gender}</span>
               </li>
               <li className="flex justify-between">
                 <span className="font-medium">Grade Level:</span>
-                <span>{user.gradeLevel}</span>
+                <span>{profile.gradeLevel}</span>
               </li>
               <li className="flex justify-between">
                 <span className="font-medium">Status:</span>
                 <span
                   className={`capitalize font-semibold ${
-                    user.status === "pending"
+                    profile.status === "pending"
                       ? "text-yellow-600"
                       : "text-green-600"
                   }`}
                 >
-                  {user.status}
+                  {profile.status}
                 </span>
               </li>
             </ul>
