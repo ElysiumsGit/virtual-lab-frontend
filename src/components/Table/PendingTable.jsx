@@ -1,9 +1,9 @@
+// components/Table/PendingTable.jsx
 import { useState, useEffect, useRef } from "react";
 import SearchField from "../TextField/SearchField";
-import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import { users } from "../../constant/constant";
 import crudStudentStore from "../../store/crudStudent";
+import { Link } from "react-router-dom";
 
 export default function PendingTable() {
   const [search, setSearch] = useState("");
@@ -11,8 +11,13 @@ export default function PendingTable() {
   const loadMoreRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
-  const { studentPending, fetchStudentPending, loading, error } =
-    crudStudentStore();
+  const {
+    studentPending,
+    fetchStudentPending,
+    approvedStudent,
+    loading,
+    error,
+  } = crudStudentStore();
 
   useEffect(() => {
     fetchStudentPending();
@@ -28,8 +33,17 @@ export default function PendingTable() {
 
   const visibleUsers = filteredUsers.slice(0, visibleCount);
 
-  const handleApprove = (userId) => {
-    console.log("Approved user:", userId);
+  console.log("Visible Users:", visibleUsers.length);
+
+  const handleApprove = async (userId) => {
+    console.log("Approving user:", userId);
+    await approvedStudent;
+    // const result = await approvedStudent(userId);
+    // if (result.success) {
+    //   console.log("Approved user:", userId);
+    // } else {
+    //   console.error("Approval failed:", result.message);
+    // }
   };
 
   const handleDeny = (userId) => {
@@ -45,19 +59,13 @@ export default function PendingTable() {
           setVisibleCount((prev) => prev + 10);
         }
       },
-      {
-        threshold: 1.0,
-      }
+      { threshold: 1.0 }
     );
 
-    if (loadMoreRef.current) {
-      observer.observe(loadMoreRef.current);
-    }
+    if (loadMoreRef.current) observer.observe(loadMoreRef.current);
 
     return () => {
-      if (loadMoreRef.current) {
-        observer.unobserve(loadMoreRef.current);
-      }
+      if (loadMoreRef.current) observer.unobserve(loadMoreRef.current);
     };
   }, [filteredUsers.length, visibleCount]);
 
@@ -81,9 +89,14 @@ export default function PendingTable() {
           </div>
 
           <div className="flex flex-col gap-4">
+            {visibleUsers.length === 0 && (
+              <div className="text-center text-gray-500 py-8">
+                No pending students found.
+              </div>
+            )}
             {visibleUsers.map((user) => (
               <div
-                key={user.id}
+                key={user._id}
                 className="p-4 bg-white shadow-md rounded-md border border-gray-200"
               >
                 <div className="flex items-center gap-4">
@@ -105,13 +118,13 @@ export default function PendingTable() {
                 <div className="mt-3 flex gap-4 text-sm justify-end">
                   <button
                     className="text-green-600 hover:underline font-medium"
-                    onClick={() => handleApprove(user.id)}
+                    onClick={() => handleApprove(user._id)}
                   >
                     Approve
                   </button>
                   <button
                     className="text-red-600 hover:underline font-medium"
-                    onClick={() => handleDeny(user.id)}
+                    onClick={() => handleDeny(user._id)}
                   >
                     Deny
                   </button>
@@ -146,9 +159,16 @@ export default function PendingTable() {
               </tr>
             </thead>
             <tbody>
+              {visibleUsers.length === 0 && (
+                <tr>
+                  <td colSpan="5" className="text-center py-8 text-gray-500">
+                    No pending students found.
+                  </td>
+                </tr>
+              )}
               {visibleUsers.map((user) => (
                 <tr
-                  key={user.id}
+                  key={user._id}
                   className="bg-white border-b border-gray-300 hover:bg-gray-50"
                 >
                   <th
@@ -171,18 +191,17 @@ export default function PendingTable() {
                   <td className="px-6 py-4">{user.lrn}</td>
                   <td className="px-6 py-4">{user.gradeLevel}</td>
                   <td className="px-6 py-4">{user.gender}</td>
-
                   <td className="px-6 py-4">
                     <div className="flex gap-6">
                       <button
                         className="text-green-600 hover:underline font-medium"
-                        onClick={() => handleApprove(user.id)}
+                        onClick={() => handleApprove(user._id)}
                       >
                         Approve
                       </button>
                       <button
                         className="text-red-600 hover:underline font-medium"
-                        onClick={() => handleDeny(user.id)}
+                        onClick={() => handleDeny(user._id)}
                       >
                         Deny
                       </button>

@@ -89,6 +89,28 @@ const crudStudentStore = create((set) => ({
     }
   },
 
+  approvedStudent: async (_id) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/student/update/approved/${_id}`
+      );
+
+      set((state) => ({
+        studentPending: state.studentPending.filter(
+          (student) => student._id !== _id
+        ),
+        studentApproved: [...state.studentApproved, res.data.student],
+        error: null,
+      }));
+
+      return { success: true };
+    } catch (error) {
+      const message = error.response?.data?.message || "Something went wrong";
+      set({ error: message });
+      return { success: false, message };
+    }
+  },
+
   deleteStudent: async (_id) => {
     try {
       await axios.delete(`http://localhost:5000/student/delete/${_id}`);
