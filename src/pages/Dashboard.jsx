@@ -11,15 +11,14 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { users } from "../constant/constant.jsx";
 import crudStudentStore from "../store/crudStudent.jsx";
 
 const Dashboard = () => {
-  const { student, fetchAllStudents } = crudStudentStore();
+  const { student, fetchAllStudents, loading } = crudStudentStore();
 
   useEffect(() => {
     fetchAllStudents();
-  }, [fetchAllStudents]);
+  }, []);
 
   const totalStudents = student.length;
   const totalSenior = student.filter(
@@ -29,8 +28,9 @@ const Dashboard = () => {
     (user) => user.gradeLevel === "Junior High School"
   ).length;
   const totalPending = student.filter(
-    (user) => user.status?.toLowerCase() === "pending"
+    (user) => user.status === "Pending"
   ).length;
+  console.log("Total pending:", totalPending);
 
   const groupedByGrade = ["Senior High School", "Junior High School"].map(
     (grade) => {

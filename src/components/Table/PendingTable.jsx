@@ -3,6 +3,7 @@ import SearchField from "../TextField/SearchField";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { users } from "../../constant/constant";
+import crudStudentStore from "../../store/crudStudent";
 
 export default function PendingTable() {
   const [search, setSearch] = useState("");
@@ -10,8 +11,15 @@ export default function PendingTable() {
   const loadMoreRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
-  const filteredUsers = users
-    .filter((user) => user.status === "pending")
+  const { studentPending, fetchStudentPending, loading, error } =
+    crudStudentStore();
+
+  useEffect(() => {
+    fetchStudentPending();
+  }, []);
+
+  const filteredUsers = studentPending
+    .filter((user) => user.status === "Pending")
     .filter((user) =>
       `${user.firstName} ${user.lastName} ${user.email} ${user.gradeLevel}`
         .toLowerCase()
@@ -52,6 +60,10 @@ export default function PendingTable() {
       }
     };
   }, [filteredUsers.length, visibleCount]);
+
+  if (loading) return <div className="text-center py-8">Loading...</div>;
+  if (error)
+    return <div className="text-center py-8 text-red-600">Error: {error}</div>;
 
   return (
     <>
@@ -127,6 +139,7 @@ export default function PendingTable() {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th className="px-6 py-3">Name</th>
+                <th className="px-6 py-3">LRN</th>
                 <th className="px-6 py-3">Grade Level</th>
                 <th className="px-6 py-3">Gender</th>
                 <th className="px-6 py-3">Action</th>
@@ -155,6 +168,7 @@ export default function PendingTable() {
                       </div>
                     </div>
                   </th>
+                  <td className="px-6 py-4">{user.lrn}</td>
                   <td className="px-6 py-4">{user.gradeLevel}</td>
                   <td className="px-6 py-4">{user.gender}</td>
 

@@ -3,6 +3,8 @@ import axios from "axios";
 
 const crudStudentStore = create((set) => ({
   student: [],
+  studentApproved: [],
+  studentPending: [],
   profile: null,
   loading: false,
   error: null,
@@ -23,7 +25,17 @@ const crudStudentStore = create((set) => ({
       const res = await axios.get(
         "http://localhost:5000/student/read/approved"
       );
-      set({ student: res.data, loading: false });
+      set({ studentApproved: res.data, loading: false });
+    } catch (error) {
+      set({ error: error.message, loading: false });
+    }
+  },
+
+  fetchStudentPending: async () => {
+    set({ loading: true });
+    try {
+      const res = await axios.get("http://localhost:5000/student/read/pending");
+      set({ studentPending: res.data, loading: false });
     } catch (error) {
       set({ error: error.message, loading: false });
     }

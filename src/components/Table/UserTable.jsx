@@ -13,13 +13,14 @@ export default function UserTable() {
   const loadMoreRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
-  const { student, fetchStudentApproved, loading, error } = crudStudentStore();
+  const { studentApproved, fetchStudentApproved, loading, error } =
+    crudStudentStore();
 
   useEffect(() => {
     fetchStudentApproved();
   }, []);
 
-  const filteredUsers = student
+  const filteredUsers = studentApproved
     .filter((user) => user.status === "Approved")
     .filter((user) =>
       `${user.firstName} ${user.lastName} ${user.email} ${user.gradeLevel} ${user.lrn}`

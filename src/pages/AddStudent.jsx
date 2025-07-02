@@ -44,16 +44,16 @@ const AddStudent = () => {
       return;
     } else {
       setSuccess(true);
-      // setFormData({
-      //   lrn: "",
-      //   firstName: "",
-      //   lastName: "",
-      //   email: "",
-      //   gender: "",
-      //   password: "",
-      //   gradeLevel: "",
-      //   status: "Approved",
-      // });
+      setFormData({
+        lrn: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        gender: "",
+        password: "",
+        gradeLevel: "",
+        status: "Approved",
+      });
       console.log("Student created successfully");
     }
   };
