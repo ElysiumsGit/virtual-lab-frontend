@@ -37,7 +37,7 @@ export default function PendingTable() {
 
   const handleApprove = async (userId) => {
     console.log("Approving user:", userId);
-    await approvedStudent;
+    await approvedStudent(userId);
     // const result = await approvedStudent(userId);
     // if (result.success) {
     //   console.log("Approved user:", userId);
