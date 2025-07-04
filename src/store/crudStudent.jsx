@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
+import { BASEURL } from "../helper/helper";
 
 const crudStudentStore = create((set) => ({
   student: [],
@@ -12,7 +13,7 @@ const crudStudentStore = create((set) => ({
   fetchAllStudents: async () => {
     set({ loading: true });
     try {
-      const res = await axios.get("http://localhost:5000/student/read");
+      const res = await axios.get(`${BASEURL}/student/read`);
       set({ student: res.data, loading: false });
     } catch (error) {
       set({ error: error.message, loading: false });
@@ -23,7 +24,7 @@ const crudStudentStore = create((set) => ({
     set({ loading: true });
     try {
       const res = await axios.get(
-        "http://localhost:5000/student/read/approved"
+        `${BASEURL}/student/read/approved`
       );
       set({ studentApproved: res.data, loading: false });
     } catch (error) {
@@ -34,7 +35,7 @@ const crudStudentStore = create((set) => ({
   fetchStudentPending: async () => {
     set({ loading: true });
     try {
-      const res = await axios.get("http://localhost:5000/student/read/pending");
+      const res = await axios.get(`${BASEURL}/student/read/pending`);
       set({ studentPending: res.data, loading: false });
     } catch (error) {
       set({ error: error.message, loading: false });
@@ -44,7 +45,7 @@ const crudStudentStore = create((set) => ({
   fetchProfile: async (_id) => {
     set({ loading: true });
     try {
-      const res = await axios.get(`http://localhost:5000/student/read/${_id}`);
+      const res = await axios.get(`${BASEURL}/student/read/${_id}`);
       set({ profile: res.data, loading: false });
     } catch (error) {
       set({ error: error.message, loading: false });
@@ -54,7 +55,7 @@ const crudStudentStore = create((set) => ({
   createStudent: async (newStudent) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/student/create",
+      `${BASEURL}/student/create`,
         newStudent
       );
       set((state) => ({
@@ -72,7 +73,7 @@ const crudStudentStore = create((set) => ({
   updateStudent: async (updatedStudent) => {
     try {
       const res = await axios.put(
-        `http://localhost:5000/student/update/${updatedStudent._id}`,
+        `${BASEURL}/student/update/${updatedStudent._id}`,
         updatedStudent
       );
       set((state) => ({
@@ -92,7 +93,7 @@ const crudStudentStore = create((set) => ({
   approvedStudent: async (_id) => {
     try {
       const res = await axios.put(
-        `http://localhost:5000/student/update/approved/${_id}`
+        `${BASEURL}/student/update/approved/${_id}`
       );
 
       set((state) => ({
@@ -113,7 +114,7 @@ const crudStudentStore = create((set) => ({
 
   deleteStudent: async (_id) => {
     try {
-      await axios.delete(`http://localhost:5000/student/delete/${_id}`);
+      await axios.delete(`${BASEURL}/student/delete/${_id}`);
       set((state) => ({
         student: state.student.filter((student) => student._id !== _id),
         error: null,
