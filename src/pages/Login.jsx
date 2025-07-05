@@ -1,16 +1,36 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import authStore from "../store/authStore";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const togglePassword = () => setShowPassword(!showPassword);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  const togglePassword = () => setShowPassword(!showPassword);
   const navigate = useNavigate();
 
-  const signIn = () => {
-    navigate("/dashboard");
+  const { loginAdmin, loading } = authStore();
+
+  const handleSignIn = async () => {
+    if (!email || !password) return alert("Please enter email and password.");
+
+    await loginAdmin({ email, password });
+
+    const { isLoggedIn, error } = authStore.getState();
+
+    console.log(`isLoggedIn: ${isLoggedIn}`);
+
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    } else {
+      alert(error || "Login failed.");
+      setEmail("");
+      setPassword("");
+    }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -18,15 +38,17 @@ const Login = () => {
         <div className="flex flex-col items-center mb-6">
           <div className="text-3xl text-indigo-500 mb-1">🎓</div>
           <h1 className="text-xl font-bold">VIRTUAL LAB SIMULATOR</h1>
-          <p className="text-sm text-gray-600 mt-1">Sign in your account</p>
+          <p className="text-sm text-gray-600 mt-1">Sign in to your account</p>
         </div>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Username</label>
+            <label className="block text-sm font-medium mb-1">Email</label>
             <input
               type="text"
-              placeholder="Enter Username"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter Email"
               className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
             />
           </div>
@@ -36,6 +58,8 @@ const Login = () => {
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter Password"
                 className="w-full border border-gray-300 rounded px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
@@ -60,10 +84,11 @@ const Login = () => {
           </div>
 
           <button
-            onClick={signIn}
-            className="w-full background-primary-color hover:opacity-95 cursor-pointer text-white py-2 rounded-md font-semibold"
+            onClick={handleSignIn}
+            disabled={loading}
+            className="w-full background-primary-color bg-indigo-600 hover:bg-indigo-700 cursor-pointer text-white py-2 rounded-md font-semibold"
           >
-            Sign In
+            {loading ? "Signing In..." : "Sign In"}
           </button>
 
           <p className="text-center text-sm text-gray-600">

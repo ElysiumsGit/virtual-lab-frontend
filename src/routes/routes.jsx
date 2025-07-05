@@ -9,6 +9,7 @@ import AddAdmin from "../pages/AddAdmin";
 import Login from "../pages/Login";
 import NotFound from "../components/NotFound/NotFound";
 import PendingStudent from "../pages/PendingStudent";
+import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -17,11 +18,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <App />,
+    element:<ProtectedRoute>
+              <App />
+            </ProtectedRoute>,
     children: [
       {
         path: "",
-        element: <Dashboard />,
+        element: <Dashboard />
       },
       {
         path: "addStudent",
