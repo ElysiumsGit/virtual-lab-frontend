@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DashboardHeader from "../components/Header/DashboardHeader";
 import CardAdmin from "../components/CardStatus/CardAdmin";
 import SearchField from "../components/TextField/SearchField";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { admins } from "../constant/constant";
-
-
+import crudAdminStore from "../store/crudAdmin";
 
 const AdminList = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
+  const { fetchAllAdmin, admin, loading, error } = crudAdminStore();
+
+  useEffect(() => {
+    fetchAllAdmin();
+  }, [])
+
   const [search, setSearch] = useState("");
 
-  const filteredUsers = admins
+  const filteredUsers = admin
     .filter((user) =>
       `${user.firstName} ${user.lastName} ${user.employeeNumber} ${user.subject}`
         .toLowerCase()
